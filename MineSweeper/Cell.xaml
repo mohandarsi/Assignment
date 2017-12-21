@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="MineSweeper.Cell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MineSweeper"
+             mc:Ignorable="d">
+    <Grid>
+        <Button Content="{Binding TextUI}" Command="{Binding Path=OnClickCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="FontSize" Value="16pt"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsItRevelaed}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsItRevelaed}" Value="False">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        <!--<MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMine}" Value="True" />
+                                <Condition Binding="{Binding IsItRevelaed}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Content" Value="B" />
+                        </MultiDataTrigger>-->
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</UserControl>

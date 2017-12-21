@@ -24,10 +24,25 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="AuctionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TimerTask.h">
+    <ClInclude Include="User.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Auction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DutchAuction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnglishAuction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlindAuction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces.h">
@@ -38,13 +53,28 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="AuctionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TimerTask.cpp">
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Auction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DutchAuction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnglishAuction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlindAuction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
