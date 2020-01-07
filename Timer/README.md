@@ -1,5 +1,5 @@
 # Timer
-To schedule tasks and run in future at specified time 
+To schedule tasks and run in future at specified time  
 Timer class manages execution of scheduled tasks.
 Uses C++11 features.
 Provides interfaces for schedule an task in future time(uses chrono nanoseconds).
