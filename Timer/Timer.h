@@ -5,37 +5,38 @@
 #include<mutex>
 #include<chrono>
 #include <ctime>
-#include "TimerTask.h"
 
+class TimerTask;
 class Timer
 {
 public:
-	Timer();
-	void Schedule(const TimerTask::TimerTaskPtr task, chrono::nanoseconds delay);
-	void Cancel(const TimerTask::TimerTaskPtr task);
-	void Stop();
-	virtual ~Timer();
+    Timer();
+    void Schedule(const std::shared_ptr<TimerTask> &task, std::chrono::nanoseconds delay);
+    std::shared_ptr<TimerTask> Schedule(const std::function<void()> &command, std::chrono::nanoseconds delay);
+    void Wait();
+    void Cancel(const std::shared_ptr<TimerTask> task);
+    void Stop();
+    virtual ~Timer();
 private:
-	struct TimerTaskDelay
-	{
-		typedef shared_ptr<TimerTaskDelay> TimerTaskDelayPtr;
-		TimerTask::TimerTaskPtr m_Task;
-		chrono::nanoseconds m_ScheduledTime;
-		chrono::nanoseconds m_Delay;
-		inline TimerTaskDelay(const chrono::nanoseconds &scheduledTime, const chrono::nanoseconds &delay, const TimerTask::TimerTaskPtr&);
-		inline bool operator<(const TimerTaskDelay& dealy) const;
-		inline chrono::nanoseconds GetExecutionTime() const;
-	};
+    struct TimerTaskDelay
+    {
+        std::weak_ptr<TimerTask> m_Task;
+        std::chrono::nanoseconds m_ScheduledTime;
+        std::chrono::nanoseconds m_Delay;
+        inline TimerTaskDelay(const std::chrono::nanoseconds &scheduledTime, const std::chrono::nanoseconds &delay, const std::shared_ptr<TimerTask>&);
+        inline bool operator<(const TimerTaskDelay& dealy) const;
+        inline std::chrono::nanoseconds GetExecutionTime() const;
+    };
 
-	bool m_bDestroy = false;
-	set<TimerTaskDelay::TimerTaskDelayPtr> m_taskTable;
-	thread m_TimerThread;
-	mutex m_mutex;
-	std::condition_variable cv;
-	void Run();
-	void runTask(const TimerTask::TimerTaskPtr& task);
-	
-	
+    bool m_bDestroy = false;
+    std::set<std::shared_ptr<TimerTaskDelay>> m_taskTable;
+    std::thread m_TimerThread;
+    std::mutex m_mutex;
+    std::condition_variable m_taskAvailable;
+    void run();
+    void runTask(const std::shared_ptr<TimerTask>& task);
+    
+    
 };
 
 

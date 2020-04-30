@@ -11,7 +11,6 @@
 #include <tchar.h>
 
 #include<iostream>
-using namespace std;
 
 
 

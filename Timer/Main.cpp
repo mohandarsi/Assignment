@@ -2,38 +2,51 @@
 //
 
 #include "stdafx.h"
-#include "Timer.h"
+
 #include<iostream>
 #include <iomanip>
+#include<thread>
+#include <chrono>
+
+#include "Timer.h"
+#include "TimerTask.h"
+
 class MyTask : public TimerTask
 {
 public: 
-	MyTask():TimerTask("MyTask"){}
-	virtual void Run()
-	{
-		std::time_t t = std::time(nullptr);
-		std::cout << "RUN Executed" << t;
-	}
+    MyTask():TimerTask("MyTask"){}
+    virtual void Run()
+    {
+        std::cout << "MyTask Executed :"<< this->GetName().c_str() << " time: " << std::chrono::steady_clock::now().time_since_epoch().count() <<std::endl;
+    }
 };
 
 int main()
 {
-	unique_ptr<Timer> timer(new Timer());
+    using namespace std::chrono_literals;
 
-	shared_ptr<TimerTask> task(new MyTask());
-	
-	timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(chrono::minutes(1)));
+    std::unique_ptr<Timer> timer(std::make_unique<Timer>());
 
-	timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(chrono::minutes(2)));
-	
-	std::this_thread::sleep_for(60s);
+    auto commandTask = 
+        timer->Schedule(
+            [](){std::cout << "my command  2+5 ="  << 2+5 << " time:" << std::chrono::steady_clock::now().time_since_epoch().count() << std::endl; },
+            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds(4)));
 
-	timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(chrono::minutes(1)));
 
-	std::this_thread::sleep_for(80s);
+    std::shared_ptr<TimerTask> task(std::make_shared<MyTask>());
+        
+    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds(5)));
 
-	timer->Stop();
-	timer.reset();
+    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::minutes(2)));
+
+    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::minutes(1)));
+
+    timer->Wait();
+
+    std::this_thread::sleep_for(2s);
+
+    timer->Stop();
+    timer.reset();
     return 0;
 }
 

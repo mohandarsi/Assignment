@@ -2,7 +2,7 @@
 #include "TimerTask.h"
 
 
-TimerTask::TimerTask(const string &name):m_Name(name)
+TimerTask::TimerTask(const std::string &name):m_Name(name)
 {
 }
 
