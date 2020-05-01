@@ -30,16 +30,14 @@ int main()
     auto commandTask = 
         timer->Schedule(
             [](){std::cout << "my command  2+5 ="  << 2+5 << " time:" << std::chrono::steady_clock::now().time_since_epoch().count() << std::endl; },
-            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds(4)));
-
+            std::chrono::high_resolution_clock::time_point(4s));
 
     std::shared_ptr<TimerTask> task(std::make_shared<MyTask>());
-        
-    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::seconds(5)));
+    timer->Schedule(task, std::chrono::high_resolution_clock::time_point(10s));
 
-    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::minutes(2)));
+    timer->Schedule(task, std::chrono::high_resolution_clock::time_point(2ms));
 
-    timer->Schedule(task, std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::minutes(1)));
+    timer->Schedule(task, std::chrono::high_resolution_clock::time_point(1min));
 
     timer->Wait();
 
