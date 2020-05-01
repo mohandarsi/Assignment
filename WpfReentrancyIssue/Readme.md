@@ -8,12 +8,14 @@ Application will crash beacuse of stack overflow exception.
 
 Reason:-  
 While setting the value in textbox ex:- AB  
-Triggers viewmodel.Text property to set a value "AB" and changes Text.  
+WPF Triggers viewmodel.Text property to set a value "AB" and changes Text via TextBoxTextChanged.  
 Property value set in viewmodel and INotifyPropertyChanged.PropertyChanged event is triggered.  
 Execution re-enters the callback via TextBoxTextChanged before the one in the callstack had a chance to finish.  
 Recursive logic without stop-case causes eventual stack overflow.  
 
-![Screenshot](screenshot.png)
+
+![Exception](screenshot.PNG)
+
 
 
 
