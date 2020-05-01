@@ -43,7 +43,7 @@ void Timer::Stop()
 
 }
 
-void Timer::Schedule(const std::shared_ptr<TimerTask> &task, std::chrono::high_resolution_clock::time_point delay)
+void Timer::Schedule(const std::shared_ptr<TimerTask> &task, std::chrono::high_resolution_clock::duration delay)
 {
     std::unique_lock<std::mutex>  lock(m_mutex);
     auto now = std::chrono::high_resolution_clock::now();
@@ -52,7 +52,7 @@ void Timer::Schedule(const std::shared_ptr<TimerTask> &task, std::chrono::high_r
     m_taskAvailable.notify_one();
 }
 
-std::shared_ptr<TimerTask>  Timer::Schedule(const std::function<void()>  &&command, std::chrono::high_resolution_clock::time_point delay)
+std::shared_ptr<TimerTask>  Timer::Schedule(const std::function<void()>  &&command, std::chrono::high_resolution_clock::duration delay)
 {
     std::shared_ptr<FunTimerTask> task(std::make_shared<FunTimerTask>("commandTask",command));
     Schedule(task, delay);
@@ -149,14 +149,14 @@ void Timer::run()
 
 inline
 Timer::TimerTaskDelay::TimerTaskDelay(std::chrono::high_resolution_clock::time_point scheduledTime,
-    std::chrono::high_resolution_clock::time_point delay, const std::shared_ptr<TimerTask>& taskPtr) :
+    std::chrono::high_resolution_clock::duration delay, const std::shared_ptr<TimerTask>& taskPtr) :
     m_ScheduledTime(scheduledTime), m_Delay(delay), m_Task(taskPtr)
 {
 
 }
 inline std::chrono::nanoseconds Timer::TimerTaskDelay::GetExecutionTime() const
 {
-    return m_ScheduledTime.time_since_epoch() + m_Delay.time_since_epoch();
+    return m_ScheduledTime.time_since_epoch() + m_Delay;
 }
 
 inline bool
