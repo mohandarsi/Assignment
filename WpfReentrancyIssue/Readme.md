@@ -1,12 +1,12 @@
 I heard lot about Reentrancy issues in WCF/WPF in one of the project which i am working,  
-But did not find any simple example in internet. Hence tried to make one myself to give idea on what is Reentrancy problem.  
+But did not find any simple example in internet. Hence tried to make one myself to demonstrate idea on what is Reentrancy problem.  
 
 
 Download and compile the Project  
 Launch application and enter any value in Text box.  
 Application will crash beacuse of stack overflow exception.  
 
-Reason:-  
+Cause of stack overflow (Due to Reentrancy):-  
 While setting the value in textbox ex:- AB  
 WPF Triggers viewmodel.Text property to set a value "AB" and changes Text via TextBoxTextChanged.  
 Property value set in viewmodel and INotifyPropertyChanged.PropertyChanged event is triggered.  
